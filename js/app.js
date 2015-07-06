@@ -10,7 +10,7 @@ blog.config(['$routeProvider', '$mdThemingProvider', function($routeProvider, $m
 		redirectTo: '/home'
 	});
 
-	$mdThemingProvider.theme('default').primaryPalette('blue');
+	$mdThemingProvider.theme('default').primaryPalette('blue-grey');
 }]);
 
 blog.run(['$rootScope', function($rootScope) {
