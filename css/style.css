@@ -1,0 +1,8 @@
+.main-container {
+	height: 100vh;
+	background-color: #f3f3f3;
+}
+
+.post-container {
+	max-width: 700px;
+}

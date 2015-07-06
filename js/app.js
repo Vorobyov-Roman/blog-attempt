@@ -2,7 +2,7 @@ var blog = angular.module('blog', ['ngRoute', 'ngMaterial']);
 
 blog.config(['$routeProvider', '$mdThemingProvider', function($routeProvider, $mdThemingProvider) {
 	$routeProvider.when('/home', {
-		title:       'Home Page',
+		title:       'MyBlog',
 		templateUrl: 'views/home.html',
 		controller:  'homeCtrl'
 	});

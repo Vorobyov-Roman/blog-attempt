@@ -1,4 +1,6 @@
 blog.controller('homeCtrl', ['$scope', '$http', function($scope, $http) {
-	$scope.pageTitle = 'Home Page';
+	$http.get('/api/blog').success(function(data) {
+		$scope.posts = data;
+	});
 }]);
 	

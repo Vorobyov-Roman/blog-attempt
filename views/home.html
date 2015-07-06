@@ -3,3 +3,17 @@
 		<span>MyBlog</span>
 	</div>
 </md-toolbar>
+
+<div class="md-padding main-container" layout="column" layout-align="space-around center">
+	<md-card ng-repeat="post in posts" class="post-container">
+		<md-toolbar class="md-hue-2">
+			<div class="md-toolbar-tools">
+				<span>{{ post.title }}</span>
+			</div>
+		</md-toolbar>
+
+		<md-card-content>
+			<span>{{ post.content }}</span>
+		</md-card-content>
+	</md-card>
+</div>
