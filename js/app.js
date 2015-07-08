@@ -1,14 +1,20 @@
 var blog = angular.module('blog', ['ngRoute', 'ngMaterial']);
 
 blog.config(['$routeProvider', '$mdThemingProvider', function($routeProvider, $mdThemingProvider) {
-	$routeProvider.when('/home', {
-		title:       'MyBlog',
-		templateUrl: 'views/home.html',
-		controller:  'homeCtrl'
-	});
-	$routeProvider.otherwise({
-		redirectTo: '/home'
-	});
+	$routeProvider
+		.when('/home', {
+			title:       'MyBlog',
+			templateUrl: 'views/home.html',
+			controller:  'homeCtrl'
+		})
+		.when('/apitest', {
+			title: 'test',
+			templateUrl: 'views/apitest.html',
+			controller: 'apitest'
+		})
+		.otherwise({
+			redirectTo: '/home'
+		});
 
 	$mdThemingProvider.theme('default').primaryPalette('blue-grey');
 }]);

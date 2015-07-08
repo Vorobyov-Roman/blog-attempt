@@ -7,4 +7,8 @@ blog.controller('homeCtrl', ['$scope', '$http', function($scope, $http) {
 			alert('Server is inaccessible.');
 		});
 }]);
+
+blog.controller('apitest', ['$scope', '$http', function($scope, $http) {
+	$scope.top = 'kek';
+}]);
 	
