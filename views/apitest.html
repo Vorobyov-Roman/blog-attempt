@@ -4,6 +4,28 @@
 	</div>
 </md-toolbar>
 
-<div class="main-container">
-	<span>{{ response }}</span>
+<div class="md-padding main-container" layout="column" layout-align="start center">
+	<md-card class="post-container">
+		<md-toolbar class="md-hue-2">
+			<div class="md-toolbar-tools">
+				<span><h1>Request:</h1></span>
+			</div>
+		</md-toolbar>
+
+		<md-card-content>
+			<span>{{ request }}</span>
+		</md-card-content>
+	</md-card>
+
+	<md-card class="post-container">
+		<md-toolbar class="md-hue-2">
+			<div class="md-toolbar-tools">
+				<span><h1>Response:</h1></span>
+			</div>
+		</md-toolbar>
+
+		<md-card-content>
+			<span>{{ response }}</span>
+		</md-card-content>
+	</md-card>
 </div>

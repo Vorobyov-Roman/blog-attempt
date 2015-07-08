@@ -9,6 +9,20 @@ blog.controller('homeCtrl', ['$scope', '$http', function($scope, $http) {
 }]);
 
 blog.controller('apitest', ['$scope', '$http', function($scope, $http) {
-	$scope.top = 'kek';
+	$scope.request = {
+		method: 'POST',
+		url: '/api/blog',
+		data: {
+			test: 'test'
+		}
+	}
+
+	$http($scope.request)
+		.success(function(data) {
+			$scope.response = data;
+		})
+		.error(function() {
+			$scope.response = 'error';
+		});
 }]);
 	
