@@ -8,12 +8,16 @@
 	<md-card ng-repeat="post in posts" class="post-container">
 		<md-toolbar class="md-hue-2">
 			<div class="md-toolbar-tools">
-				<span>{{ post.title }}</span>
-			</div>
+				<div layout="column" layout-align="center start">
+					
+					<span>by {{ post.author.username }} on {{ post.created }}</span>
+					<span>last edited {{ post.edited }}</span>
+				</div>
+			</div>			
 		</md-toolbar>
 
 		<md-card-content>
-			<span>{{ post.content }}</span>
+			<span>{{ post.preview }}</span>
 		</md-card-content>
 	</md-card>
 </div>
