@@ -4,14 +4,14 @@
 	</div>
 </md-toolbar>
 
-<div class="md-padding main-container" layout="column" layout-align="space-around center">
+<div class="md-padding main-container" layout="column" layout-align="start center">
 	<md-card ng-repeat="post in posts" class="post-container">
 		<md-toolbar class="md-hue-2">
 			<div class="md-toolbar-tools">
 				<div layout="column" layout-align="center start">
-					
+					<span>{{ post.title }}</span>
 					<span>by {{ post.author.username }} on {{ post.created }}</span>
-					<span>last edited {{ post.edited }}</span>
+					<span ng-if="post.edited">last edited {{ post.edited }}</span>
 				</div>
 			</div>			
 		</md-toolbar>
