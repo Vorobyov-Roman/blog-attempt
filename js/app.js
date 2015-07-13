@@ -7,10 +7,15 @@ blog.config(['$routeProvider', '$mdThemingProvider', function($routeProvider, $m
 			templateUrl: 'views/home.html',
 			controller:  'homeCtrl'
 		})
-		.when('/apitest', {
-			title: 'test',
-			templateUrl: 'views/apitest.html',
-			controller: 'apitest'
+		.when('/user/:id', {
+			title:       'User profile',
+			templateUrl: 'views/user.html',
+			controller:  'userCtrl'
+		})
+		.when('/post/:id', {
+			title:       'Post',
+			templateUrl: 'views/post.html',
+			controller:  'postCtrl'
 		})
 		.otherwise({
 			redirectTo: '/home'

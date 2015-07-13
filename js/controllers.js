@@ -7,12 +7,22 @@ blog.controller('homeCtrl', ['$scope', '$http', function($scope, $http) {
 				function isToday(date) {
 					return new Date(Date.now()).getDate() == new Date(post.created.date).getDate();
 				}
-			
-				post.created = isToday(post.created) ? post.created.time : post.created.date;
-				post.edited = isToday(post.edited) ? post.edited.time : post.edited.date;
 
 				if (JSON.stringify(post.edited) == JSON.stringify(post.created)) {
 					delete post.edited;
+				}
+				
+				if (isToday(post.created)) {
+					post.datePreposition = 'at';
+					post.created = post.created.time;
+				} else {
+					post.datePreposition = 'on';
+					post.created = post.created.date;
+				}
+
+				
+				if (typeof post.edited !== 'undefined') {
+					post.edited = isToday(post.edited) ? post.edited.time : post.edited.date;
 				}
 			});
 		})
@@ -21,8 +31,11 @@ blog.controller('homeCtrl', ['$scope', '$http', function($scope, $http) {
 		});
 }]);
 
-blog.controller('apitest', ['$scope', '$http', function($scope, $http) {
-	$scope.request = {};
-	$scope.response = {};
+blog.controller('userCtrl', ['$scope', '$http', function($scope, $http) {
+	alert('Imagine being taken to the user profile');
+}]);
+
+blog.controller('postCtrl', ['$scope', '$http', function($scope, $http) {
+	alert('Imagine being taken to the post page');
 }]);
 	

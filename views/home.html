@@ -10,14 +10,22 @@
 			<div class="md-toolbar-tools">
 				<div layout="column" layout-align="center start">
 					<span>{{ post.title }}</span>
-					<span>by {{ post.author.username }} on {{ post.created }}</span>
-					<span ng-if="post.edited">last edited {{ post.edited }}</span>
 				</div>
 			</div>			
 		</md-toolbar>
 
 		<md-card-content>
-			<span>{{ post.preview }}</span>
+			<span>{{ post.preview }}...</span>
 		</md-card-content>
+		
+		<md-divider></md-divider>
+
+		<div layout="row" layout-align="space-between center" class="md-padding">
+			<div>
+				<span>by <a href="#/user/{{ post.author.id }}">{{ post.author.username }}</a> {{ post.datePreposition }} {{ post.created }}</span>
+				<span ng-if="post.edited">last edited {{ post.edited }}</span>
+			</div>
+			<md-button class="md-raised md-primary" ng-href="#/post/{{ post.id }}">Read full</md-button>
+		</div>
 	</md-card>
 </div>
