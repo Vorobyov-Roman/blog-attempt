@@ -1,5 +1,5 @@
 blog.controller('homeCtrl', ['$scope', '$http', function($scope, $http) {
-	$http.get('/api/blog/posts?showuser=1')
+	$http.get('178.165.53.183:3000/api/blog/posts?showuser=1')
 		.success(function(data) {
 			$scope.posts = data;
 
