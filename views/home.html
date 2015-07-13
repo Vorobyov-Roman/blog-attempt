@@ -22,7 +22,7 @@
 
 		<div layout="row" layout-align="space-between center" class="md-padding">
 			<div>
-				<span>by <a href="#/user/{{ post.author.id }}">{{ post.author.username }}</a> {{ post.datePreposition }} {{ post.created }}</span>
+				<span>by <a href="#/user/{{ post.author.id }}">{{ post.author.username }}</a> {{ post.created }}</span>
 				<span ng-if="post.edited">last edited {{ post.edited }}</span>
 			</div>
 			<md-button class="md-raised md-primary" ng-href="#/post/{{ post.id }}">Read full</md-button>
