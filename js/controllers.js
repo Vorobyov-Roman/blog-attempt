@@ -30,11 +30,10 @@ function FormatPost(post) {
 	}
 }
 
-blog.controller('homeCtrl', ['$scope', '$http', function($scope, $http) {
+blog.controller('homeCtrl', function($scope, $http) {
 	$http.get('http://178.165.53.183:3000/api/blog/posts?showuser=1')
 		.success(function(data) {
 			$scope.posts = data;
-
 			$scope.posts.forEach(function(post) {
 				FormatPost(post);
 			});
@@ -42,18 +41,33 @@ blog.controller('homeCtrl', ['$scope', '$http', function($scope, $http) {
 		.error(function() {
 			alert('The server is inaccessible.');
 		});
-}]);
+});
 
-blog.controller('postCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
+blog.controller('postCtrl', function($scope, $http, $routeParams, $location) {
 	$http.get('http://178.165.53.183:3000/api/blog/posts/' + $routeParams.id)
 		.success(function(data) {
-			$scope.post = data;
+			if (!data) {
+				$location.path('/home');
+			}
 
+			$scope.post = data;
 			FormatPost($scope.post);
 		});
-}]);
+});
 
-blog.controller('userCtrl', ['$scope', '$http', function($scope, $http) {
-	//alert('Imagine being taken to the user profile');
-}]);
+blog.controller('userCtrl', function($scope, $http, $routeParams, $location) {
+	$http.get('http://178.165.53.183:3000/api/blog/posts?author=' + $routeParams.id)
+		.success(function(data) {
+			if (!data || data.length == 0) {
+				$location.path('/home');
+			}
+
+			$scope.posts = data;
+			$scope.posts.forEach(function(post) {
+				FormatPost(post);
+			});
+
+			$scope.author = $scope.posts[0].author.username;
+		});
+});
 	

@@ -1,6 +1,6 @@
 var blog = angular.module('blog', ['ngRoute', 'ngMaterial']);
 
-blog.config(['$routeProvider', '$mdThemingProvider', function($routeProvider, $mdThemingProvider) {
+blog.config(function($routeProvider, $mdThemingProvider) {
 	$routeProvider
 		.when('/home', {
 			title:       'MyBlog',
@@ -21,11 +21,13 @@ blog.config(['$routeProvider', '$mdThemingProvider', function($routeProvider, $m
 			redirectTo: '/home'
 		});
 
-	$mdThemingProvider.theme('default').primaryPalette('blue-grey');
-}]);
+	$mdThemingProvider
+		.theme('default')
+		.primaryPalette('blue-grey');
+});
 
 blog.run(['$rootScope', function($rootScope) {
-	$rootScope.$on('$routeChangeSuccess', function(event, current, previous) {
-		$rootScope.title = current.$$route.title;
+	$rootScope.$on('$routeChangeStart', function(event, current, previous) {
+		$rootScope.title = current.title;
 	});
 }]);
