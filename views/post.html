@@ -5,5 +5,26 @@
 </md-toolbar>
 
 <div class="md-padding main-container" layout="column" layout-align="start center">
-	
+	<md-card class="post-container">
+		<md-toolbar class="md-hue-2">
+			<div class="md-toolbar-tools">
+				<div layout="column" layout-align="center start">
+					<span>{{ post.title }}</span>
+				</div>
+			</div>			
+		</md-toolbar>
+
+		<md-card-content>
+			<span>{{ post.contents }}</span>
+		</md-card-content>
+		
+		<md-divider></md-divider>
+
+		<div layout="row" layout-align="space-between center" class="md-padding">
+			<div>
+				<span>by <a href="#/user/{{ post.author.id }}">{{ post.author.username }}</a> {{ post.created }}</span>
+				<span ng-if="post.edited">last edited {{ post.edited }}</span>
+			</div>
+		</div>
+	</md-card>
 </div>
