@@ -54,6 +54,6 @@ blog.controller('postCtrl', ['$scope', '$http', '$routeParams', function($scope,
 }]);
 
 blog.controller('userCtrl', ['$scope', '$http', function($scope, $http) {
-	alert('Imagine being taken to the user profile');
+	//alert('Imagine being taken to the user profile');
 }]);
 	
