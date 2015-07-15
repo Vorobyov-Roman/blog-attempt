@@ -30,19 +30,80 @@ function FormatPost(post) {
 	}
 }
 
-blog.controller('submitForm', function($scope, $http, $mdDialog) {
-	$scope.proceed = function(operation) {
-		$mdDialog.hide();
+blog.controller('toolbarCtrl', function($scope, pageTitle) {
+	$scope.pageTitle = pageTitle.getTitle();
+});
 
+blog.controller('submitForm', function($scope, $http, $mdDialog, $cookies) {
+	function tryLogIn() {
+		$http.post('http://178.165.53.183:3000/api/blog/login', $scope.userinfo)
+			.success(function(data) {
+				if (data.status == 'OK') {
+					$cookies.put('token', data.token);
+					console.log($cookies.get('token'));
+					$mdDialog.hide();
+				} else {
+					alert(data.status);
+				}
+			});
+	}
+	function trySignIn() {
+		$http.post('http://178.165.53.183:3000/api/blog/users', $scope.userinfo)
+			.success(function(data) {
+				if (data.status == 'OK') {
+					//tryLogIn();
+					$mdDialog.hide();
+				} else {
+					alert(data.status);
+				}
+			});
+	}
+
+	$scope.proceed = function(operation) {
 		if (operation == 'Log In') {
-			alert('login');
+			tryLogIn();
 		} else {
-			alert('signup');
+			trySignIn();
 		}
 	}
 });
+blog.controller('formCtrl', function($scope, $http, $mdDialog) {
+	function dialog($scope, $mdDialog, operation) {
+		$scope.operation = operation;
 
-blog.controller('homeCtrl', function($scope, $http) {
+		$scope.close = function() {
+			$mdDialog.cancel();
+		};
+	}
+
+	$scope.login = function(ev) {
+		$mdDialog.show({
+			controller: dialog,
+			templateUrl: './views/form.html',
+			parent: angular.element(document.body),
+			targetEvent: ev,
+			locals: {
+				operation: 'Log In'
+			}
+		});
+	};
+
+	$scope.signup = function(ev) {
+		$mdDialog.show({
+			controller: dialog,
+			templateUrl: './views/form.html',
+			parent: angular.element(document.body),
+			targetEvent: ev,
+			locals: {
+				operation: 'Sign Up'
+			}
+		});
+	}
+});
+
+blog.controller('homeCtrl', function($scope, $http, pageTitle) {
+	pageTitle.setTitle('');
+
 	$http.get('http://178.165.53.183:3000/api/blog/posts?showuser=1')
 		.success(function(data) {
 			$scope.posts = data;
@@ -55,35 +116,7 @@ blog.controller('homeCtrl', function($scope, $http) {
 		});
 });
 
-blog.controller('formCtrl', function($scope, $http, $mdDialog) {
-	function dialog($scope, $mdDialog, operation) {
-		$scope.operation = operation;
-
-		$scope.close = function() {
-			$mdDialog.cancel();
-		};
-	}
-
-	$scope.login = function(ev) {
-		$mdDialog.show({
-			controller: function($scope, $mdDialog) { dialog($scope, $mdDialog, 'Log In'); },
-			templateUrl: './views/form.html',
-			parent: angular.element(document.body),
-			targetEvent: ev
-		});
-	};
-
-	$scope.signup = function(ev) {
-		$mdDialog.show({
-			controller: function($scope, $mdDialog) { dialog($scope, $mdDialog, 'Sign Up'); },
-			templateUrl: './views/form.html',
-			parent: angular.element(document.body),
-			targetEvent: ev
-		});
-	}
-});
-
-blog.controller('postCtrl', function($scope, $http, $routeParams, $location) {
+blog.controller('postCtrl', function($scope, $http, $routeParams, $location, pageTitle) {
 	$http.get('http://178.165.53.183:3000/api/blog/posts/' + $routeParams.id)
 		.success(function(data) {
 			if (!data) {
@@ -93,9 +126,11 @@ blog.controller('postCtrl', function($scope, $http, $routeParams, $location) {
 			$scope.post = data;
 			FormatPost($scope.post);
 		});
+
+	pageTitle.setTitle('');
 });
 
-blog.controller('userCtrl', function($scope, $http, $routeParams, $location) {
+blog.controller('userCtrl', function($scope, $http, $routeParams, $location, pageTitle) {
 	$http.get('http://178.165.53.183:3000/api/blog/posts?author=' + $routeParams.id)
 		.success(function(data) {
 			if (!data || data.length == 0) {
@@ -108,6 +143,8 @@ blog.controller('userCtrl', function($scope, $http, $routeParams, $location) {
 			});
 
 			$scope.author = $scope.posts[0].author.username;
+
+			pageTitle.setTitle('Posts by ' + $scope.author);
 		});
 });
 	

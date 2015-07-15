@@ -1,4 +1,4 @@
-var blog = angular.module('blog', ['ngRoute', 'ngMaterial']);
+var blog = angular.module('blog', ['ngRoute', 'ngMaterial', 'ngCookies']);
 
 blog.config(function($routeProvider, $mdThemingProvider) {
 	$routeProvider
@@ -24,6 +24,19 @@ blog.config(function($routeProvider, $mdThemingProvider) {
 	$mdThemingProvider
 		.theme('default')
 		.primaryPalette('blue-grey');
+});
+
+blog.factory('pageTitle', function() {
+	var pageTitle = '';
+
+	return {
+		setTitle: function(value) {
+			pageTitle = value;
+		},
+		getTitle: function() {
+			return pageTitle;
+		}
+	};
 });
 
 blog.run(['$rootScope', function($rootScope) {
