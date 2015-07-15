@@ -43,6 +43,19 @@ blog.controller('homeCtrl', function($scope, $http) {
 		});
 });
 
+blog.controller('formCtrl', function($scope, $http, $mdDialog) {
+	$scope.login = function(ev) {
+		var options = $mdDialog.alert()
+			.parent(angular.element(document.body))
+			.title('login')
+			.content('log in here')
+			.ok('login!')
+			.targetEvent(ev);
+
+		$mdDialog.show(options);
+	}
+});
+
 blog.controller('postCtrl', function($scope, $http, $routeParams, $location) {
 	$http.get('http://178.165.53.183:3000/api/blog/posts/' + $routeParams.id)
 		.success(function(data) {

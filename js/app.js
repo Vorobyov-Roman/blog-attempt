@@ -8,7 +8,7 @@ blog.config(function($routeProvider, $mdThemingProvider) {
 			controller:  'homeCtrl'
 		})
 		.when('/user/:id', {
-			title:       'User profile',
+			title:       'User Profile',
 			templateUrl: 'views/user.html',
 			controller:  'userCtrl'
 		})
