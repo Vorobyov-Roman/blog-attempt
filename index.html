@@ -16,8 +16,15 @@
 				<div><a href="#/home">MyBlog</a></div>
 				<div>{{ pageTitle }}</div>
 				<div ng-controller="formCtrl">
-					<md-button class="md-raised" ng-click="signup($event)">Sign Up</md-button>
-					<md-button class="md-raised" ng-click="login($event)">Log In</md-button>
+					<div ng-show="logged">
+						<md-button class="md-raised" ng-click="write($event)">Write a post</md-button>
+						<md-button class="md-raised" ng-click="logout($event)">Log Out</md-button>
+					</div>
+
+					<div ng-show="!logged">
+						<md-button class="md-raised" ng-click="signup($event)">Sign Up</md-button>
+						<md-button class="md-raised" ng-click="login($event)">Log In</md-button>
+					</div>
 				</div>
 			</div>
 		</md-toolbar>

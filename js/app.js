@@ -1,6 +1,8 @@
 var blog = angular.module('blog', ['ngRoute', 'ngMaterial', 'ngCookies']);
 
-blog.config(function($routeProvider, $mdThemingProvider) {
+blog.config(function($routeProvider, $httpProvider, $mdThemingProvider) {
+	$httpProvider.defaults.withCredentials = true;
+	
 	$routeProvider
 		.when('/home', {
 			title:       'MyBlog',
@@ -39,8 +41,23 @@ blog.factory('pageTitle', function() {
 	};
 });
 
-blog.run(['$rootScope', function($rootScope) {
+blog.factory('loggedStatus', function() {
+	var status;
+
+	return {
+		setStatus: function(value) {
+			status = value;
+		},
+		getStatus: function() {
+			return status;
+		}
+	};
+});
+
+blog.run(function($rootScope, $cookies, loggedStatus) {
+	loggedStatus.setStatus($cookies.get('token') ? true : false);
+
 	$rootScope.$on('$routeChangeStart', function(event, current, previous) {
 		$rootScope.title = current.title;
 	});
-}]);
+});

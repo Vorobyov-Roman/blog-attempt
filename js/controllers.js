@@ -30,28 +30,29 @@ function FormatPost(post) {
 	}
 }
 
-blog.controller('toolbarCtrl', function($scope, pageTitle) {
+blog.controller('toolbarCtrl', function($scope, pageTitle, loggedStatus) {
+	$scope.logged = loggedStatus.getStatus();
 	$scope.pageTitle = pageTitle.getTitle();
 });
 
-blog.controller('submitForm', function($scope, $http, $mdDialog, $cookies) {
+blog.controller('submitForm', function($scope, $http, $mdDialog, $cookies, $route, loggedStatus) {
 	function tryLogIn() {
 		$http.post('http://178.165.53.183:3000/api/blog/login', $scope.userinfo)
 			.success(function(data) {
 				if (data.status == 'OK') {
 					$cookies.put('token', data.token);
-					console.log($cookies.get('token'));
-					$mdDialog.hide();
+					loggedStatus.setStatus(true);
+					$route.reload();
 				} else {
 					alert(data.status);
 				}
 			});
 	}
-	function trySignIn() {
+	function trySignUp() {
 		$http.post('http://178.165.53.183:3000/api/blog/users', $scope.userinfo)
 			.success(function(data) {
 				if (data.status == 'OK') {
-					//tryLogIn();
+					tryLogIn();
 					$mdDialog.hide();
 				} else {
 					alert(data.status);
@@ -63,11 +64,11 @@ blog.controller('submitForm', function($scope, $http, $mdDialog, $cookies) {
 		if (operation == 'Log In') {
 			tryLogIn();
 		} else {
-			trySignIn();
+			trySignUp();
 		}
 	}
 });
-blog.controller('formCtrl', function($scope, $http, $mdDialog) {
+blog.controller('formCtrl', function($scope, $http, $mdDialog, $cookies, $route, loggedStatus) {
 	function dialog($scope, $mdDialog, operation) {
 		$scope.operation = operation;
 
@@ -98,7 +99,21 @@ blog.controller('formCtrl', function($scope, $http, $mdDialog) {
 				operation: 'Sign Up'
 			}
 		});
-	}
+	};
+
+	$scope.logout = function(ev) {
+		$http.post('http://178.165.53.183:3000/api/blog/logout')
+			.success(function(data) {
+				if (data.status == 'OK') {
+					console.log('success');
+					$cookies.remove('token');
+					loggedStatus.setStatus(false);
+					$route.reload();
+				} else {
+					alert(data.status);
+				}
+			});
+	};
 });
 
 blog.controller('homeCtrl', function($scope, $http, pageTitle) {
