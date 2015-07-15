@@ -1,8 +1,8 @@
 <md-toolbar>
-	<div class="md-toolbar-tools" layout="row", layout-align="space-between center">
+	<div class="md-toolbar-tools" layout="row" layout-align="space-between center">
 		<div><a href="#/home">MyBlog</a></div>
 		<div ng-controller="formCtrl">
-			<md-button class="md-raised">Sign Up</md-button>
+			<md-button class="md-raised" ng-click="signup($event)">Sign Up</md-button>
 			<md-button class="md-raised" ng-click="login($event)">Log In</md-button>
 		</div>
 	</div>

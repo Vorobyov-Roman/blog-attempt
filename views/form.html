@@ -1,0 +1,29 @@
+<md-dialog aria-label="form">
+	<form ng-submit="proceed(operation)" ng-controller="submitForm" name="form">
+		<md-toolbar>
+			<div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+				<span>{{ operation }}</span>
+				<md-button type="button" class="md-icon-button" ng-click="close()">
+					<md-icon md-svg-src="./assets/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+
+		<md-dialog-content>
+			<md-input-container>
+				<label>Username</label>
+				<input required name="username" ng-model="userinfo.username">
+			</md-input-container>
+
+			<md-input-container>
+				<label>Password</label>
+				<input required name="password" ng-model="userinfo.password">
+			</md-input-container>
+		</md-dialog-content>
+
+		<div class="md-actions" layout="row">
+			<md-button type="button" ng-click="close()">Cancel</md-button>
+			<md-button type="submit">{{ operation }}</md-button>
+		</div>
+	</form>
+</md-dialog>
