@@ -8,15 +8,17 @@
 				</md-button>
 			</div>
 		</md-toolbar>
-
-		<md-input-container flex>
-			<label>Title</label>
-			<input required name="title" ng-model="post.title" md-maxlength="150"></input>
-		</md-input-container>
-
-		<md-input-container flex>
-			<textarea aria-label="conents" required name="contents" ng-model="post.contents"></textarea>
-		</md-input-container>
+		
+		<md-dialog-content>
+			<md-input-container flex>
+				<label>Title</label>
+				<input required name="title" ng-model="post.title" md-maxlength="150"></input>
+			</md-input-container>
+	
+			<md-input-container flex>
+				<textarea aria-label="conents" required name="contents" ng-model="post.contents"></textarea>
+			</md-input-container>
+		</md-dialog-content>
 
 		<div class="md-actions" layout="row">
 			<md-button type="button" ng-click="close()">Cancel</md-button>
