@@ -1,0 +1,26 @@
+<md-dialog aria-label="form" flex>
+	<form ng-submit="write()" ng-controller="writePost" name="form">
+		<md-toolbar>
+			<div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+				<span>Write a post</span>
+				<md-button type="button" class="md-icon-button" ng-click="close()">
+					<md-icon md-svg-src="./assets/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+
+		<md-input-container flex>
+			<label>Title</label>
+			<input required name="title" ng-model="post.title" md-maxlength="150"></input>
+		</md-input-container>
+
+		<md-input-container flex>
+			<textarea aria-label="conents" required name="contents" ng-model="post.contents"></textarea>
+		</md-input-container>
+
+		<div class="md-actions" layout="row">
+			<md-button type="button" ng-click="close()">Cancel</md-button>
+			<md-button type="submit">Post</md-button>
+		</div>
+	</form>
+</md-dialog>

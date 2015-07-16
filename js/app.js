@@ -1,8 +1,6 @@
 var blog = angular.module('blog', ['ngRoute', 'ngMaterial', 'ngCookies']);
 
-blog.config(function($routeProvider, $httpProvider, $mdThemingProvider) {
-	$httpProvider.defaults.withCredentials = true;
-	
+blog.config(function($routeProvider, $mdThemingProvider) {
 	$routeProvider
 		.when('/home', {
 			title:       'MyBlog',

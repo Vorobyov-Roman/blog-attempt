@@ -35,14 +35,35 @@ blog.controller('toolbarCtrl', function($scope, pageTitle, loggedStatus) {
 	$scope.pageTitle = pageTitle.getTitle();
 });
 
-blog.controller('submitForm', function($scope, $http, $mdDialog, $cookies, $route, loggedStatus) {
+blog.controller('writePost', function($scope, $http, $mdDialog, $cookies, $location) {
+	$scope.write = function() {
+		var body = {
+			token: $cookies.get('token'),
+			post: $scope.post
+		};
+
+		console.log(body);
+
+		$http.post('http://178.165.53.183:3000/api/blog/posts', body)
+			.success(function(data) {
+				if (data.status == 'OK') {
+					$mdDialog.hide();
+					$location.path('/home');
+				} else {
+					alert(data.status);
+				}
+			});
+	}
+});
+
+blog.controller('submitForm', function($scope, $http, $mdDialog, $cookies, $window, loggedStatus) {
 	function tryLogIn() {
 		$http.post('http://178.165.53.183:3000/api/blog/login', $scope.userinfo)
 			.success(function(data) {
 				if (data.status == 'OK') {
 					$cookies.put('token', data.token);
 					loggedStatus.setStatus(true);
-					$route.reload();
+					$window.location.reload();
 				} else {
 					alert(data.status);
 				}
@@ -68,7 +89,7 @@ blog.controller('submitForm', function($scope, $http, $mdDialog, $cookies, $rout
 		}
 	}
 });
-blog.controller('formCtrl', function($scope, $http, $mdDialog, $cookies, $route, loggedStatus) {
+blog.controller('formCtrl', function($scope, $http, $mdDialog, $cookies, $window, loggedStatus) {
 	function dialog($scope, $mdDialog, operation) {
 		$scope.operation = operation;
 
@@ -102,18 +123,30 @@ blog.controller('formCtrl', function($scope, $http, $mdDialog, $cookies, $route,
 	};
 
 	$scope.logout = function(ev) {
-		$http.post('http://178.165.53.183:3000/api/blog/logout')
+		$http.post('http://178.165.53.183:3000/api/blog/logout', { token: $cookies.get('token') })
 			.success(function(data) {
 				if (data.status == 'OK') {
 					console.log('success');
 					$cookies.remove('token');
 					loggedStatus.setStatus(false);
-					$route.reload();
+					$window.location.reload();
 				} else {
 					alert(data.status);
 				}
 			});
 	};
+
+	$scope.write = function(ev) {
+		$mdDialog.show({
+			controller: dialog,
+			templateUrl: './views/write.html',
+			parent: angular.element(document.body),
+			targetEvent: ev,
+			locals: {
+				operation: 'Write a post'
+			}
+		});
+	}
 });
 
 blog.controller('homeCtrl', function($scope, $http, pageTitle) {
