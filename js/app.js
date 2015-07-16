@@ -1,4 +1,4 @@
-var blog = angular.module('blog', ['ngRoute', 'ngMaterial', 'ngCookies']);
+var blog = angular.module('blog', ['ngRoute', 'ngMaterial', 'ngCookies', 'infinite-scroll']);
 
 blog.config(function($routeProvider, $mdThemingProvider) {
 	$routeProvider

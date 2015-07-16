@@ -152,16 +152,24 @@ blog.controller('formCtrl', function($scope, $http, $mdDialog, $cookies, $window
 blog.controller('homeCtrl', function($scope, $http, pageTitle) {
 	pageTitle.setTitle('');
 
-	$http.get('http://178.165.53.183:3000/api/blog/posts?showuser=1')
-		.success(function(data) {
-			$scope.posts = data;
-			$scope.posts.forEach(function(post) {
-				FormatPost(post);
+	var skip = 0;
+	$scope.posts = [];
+
+	$scope.loadPosts = function() {
+		$http.get('http://178.165.53.183:3000/api/blog/posts?skip=' + skip + '&limit=10')
+			.success(function(data) {
+				data.forEach(function(post) {
+					FormatPost(post);
+				});
+				$scope.posts = $scope.posts.concat(data);
+				skip += 10;
+			})
+			.error(function() {
+				alert('The server is inaccessible.');
 			});
-		})
-		.error(function() {
-			alert('The server is inaccessible.');
-		});
+	};
+
+	$scope.loadPosts();
 });
 
 blog.controller('postCtrl', function($scope, $http, $routeParams, $location, pageTitle) {
